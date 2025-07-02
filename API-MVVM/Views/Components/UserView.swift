@@ -22,17 +22,27 @@ struct UserView: View {
                     Text("Ja ta no foco")
                     VStack(alignment: .leading, spacing: 4) {
                         
-                        let user = viewModel.users[viewModel.selectedIndex ?? 0]
+                        let user = viewModel.isFilterActive ?
+                                   viewModel.usersFilter[viewModel.selectedIndex ?? 0] :
+                                   viewModel.users[viewModel.selectedIndex ?? 0]
                         Button(action: {
                             viewModel.previousUser()
                         },label: {
                             Text("Anterior")
                         })
+                        
+                        .disabled(viewModel.isAtStart) //só bloqueia se estiver no começo
+
+                        
                         Button(action: {
                             viewModel.nextUser()
                         },label: {
                             Text("Proximo")
                         })
+                        
+                        .disabled(viewModel.isAtEnd) // só bloqueia se estiver no fim
+
+                        
                         Text(user.userName)
                             .font(.headline)
                         Text("\(user.kit)")

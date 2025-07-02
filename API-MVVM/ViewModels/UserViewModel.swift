@@ -17,6 +17,21 @@ class UserViewModel: ObservableObject {
     @Published var selectedSortOption: String = "Menor número primeiro"
     @Published var selectedMonths: Set<String> = []
     @Published var isFilterActive: Bool = false
+    
+    
+    //variaveis criada para desativar os botões quando chegar no inicio ou fim da lista
+    var isAtStart: Bool {
+        return selectedIndex == 0
+    }
+
+    var isAtEnd: Bool {
+        guard let index = selectedIndex else { return true }
+        let list = isFilterActive ? usersFilter : users
+        return index >= list.count - 1
+    }
+    
+    
+    
 
     
     func fetchData() async {
