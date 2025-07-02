@@ -13,9 +13,11 @@ struct Position: Codable {
     var namePosition: String
 }
 
-class User: Codable,Identifiable {
+struct User: Codable, Identifiable{
     var idUser: String
     var userName: String
     var kit: Int
     var position: Position
+    
+    var id: String { idUser }
 }
