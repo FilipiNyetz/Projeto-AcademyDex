@@ -18,4 +18,6 @@ class User: Codable,Identifiable {
     var userName: String
     var kit: Int
     var position: Position
+    var birthday: String
+
 }
