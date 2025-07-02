@@ -1,99 +1,16 @@
-//import SwiftUI
-//
-//struct UserView: View {
-//    @StateObject var viewModel = UserViewModel()
-//
-//    var gridRows: [GridItem] {
-//        [
-//            GridItem(.flexible()),
-//            GridItem(.flexible())
-//        ]
-//    }
-//
-//    var body: some View {
-//
-//        NavigationView {
-//            if viewModel.selectedIndex != nil {
-//                VStack {
-//
-//                    Text("Ja ta no foco")
-//                    VStack(alignment: .leading, spacing: 4) {
-//
-//                        let user = viewModel.users[viewModel.selectedIndex ?? 0]
-//                        Button(action: {
-//                            viewModel.previousUser()
-//                        },label: {
-//                            Text("Anterior")
-//                        })
-//                        Button(action: {
-//                            viewModel.nextUser()
-//                        },label: {
-//                            Text("Proximo")
-//                        })
-//                        Text(user.userName)
-//                            .font(.headline)
-//                        Text("\(user.kit)")
-//
-//                        Text("Cargo: \(user.position.namePosition)")
-//                    }
-//                    Button(action: {
-//                        viewModel.selectedIndex = nil
-//                    }, label: {
-//                        Text("Voltar")
-//                    })
-//                }
-//            } else {
-//                ScrollView{
-//                    VStack(alignment: .leading, spacing: 16){
-//                        LazyVGrid(columns: gridRows, spacing: 16) {
-//                            ForEach(Array(viewModel.users.enumerated()), id: \.element.id) {
-//                                index,
-//                                user in
-//                                Button(
-//                                    action: {
-//                                        print("Vai ir pro foco")
-//                                        print(index)
-//                                        viewModel.selectedIndex = index
-//
-//                                    },
-//                                    label: {
-//                                        CardComponent(
-//                                            kit: viewModel.users[index].kit,
-//                                            name: viewModel.users[index].userName,
-//                                            idPosition: viewModel.users[index].position.idPosition,
-//                                            viewModel.users[index].position.positionName
-//                                        )
-//                                        .frame(width: 150)
-//                                        .padding()
-//
-//                                    }
-//
-//                                )
-//                            }
-//                        }
-//                    }
-//                    .padding()
-//                }
-//            }
-//        }.navigationTitle("Users API ").task {
-//            await viewModel.fetchData()
-//        }
-//
-//    }
-//}
-//
 import SwiftUI
 
 struct UserView: View {
     @StateObject var viewModel = UserViewModel()
-    
+    @State private var showFilter = false
+
     var gridRows: [GridItem] {
         [
             GridItem(.flexible()),
             GridItem(.flexible())
         ]
     }
-    
+
     var selectedUser: User? {
         guard let index = viewModel.selectedIndex,
               viewModel.users.indices.contains(index) else {
@@ -101,70 +18,55 @@ struct UserView: View {
         }
         return viewModel.users[index]
     }
-    
+
+    var list: [User] {
+        viewModel.isFilterActive ? viewModel.usersFilter : viewModel.users
+    }
+
     var body: some View {
         NavigationStack {
-            if let user = selectedUser {
-                VStack {
-                    Text("Já tá no foco")
-                        .font(.title2)
-                        .padding(.bottom)
-                    
-                    VStack(alignment: .leading, spacing: 8) {
-                        Button("Anterior") {
-                            viewModel.previousUser()
-                        }
-                        Button("Próximo") {
-                            viewModel.nextUser()
-                        }
-                        
-                        Text(user.userName)
-                            .font(.headline)
-                        
-                        Text("Kit: \(user.kit)")
-                        Text("Cargo: \(user.position.namePosition)")
+            ScrollView {
+                VStack(spacing: 16) {
+                    // Botão para abrir filtro
+                    Button("Abrir Filtro") {
+                        showFilter = true
                     }
-                    .padding()
-                    
-                    Button("Voltar") {
-                        viewModel.selectedIndex = nil
-                    }
-                    .padding(.top)
-                }
-                .padding()
-                .navigationTitle("AcaDex") // ✅ aqui está dentro do if
-                .task {
-                    await viewModel.fetchData()
-                }
-            } else {
-                ScrollView {
-                    VStack{
-                        LazyVGrid(columns: gridRows, spacing: 32) {
-                            ForEach(Array(viewModel.users.enumerated()), id: \.element.idUser) { index, user in
-                                Button {
-                                    print("Vai ir pro foco")
-                                    print(index)
-                                    viewModel.selectedIndex = index
-                                } label: {
-                                    CardComponent(
-                                        kit: user.kit,
-                                        name: user.userName,
-                                        idPosition: user.position.idPosition,
-                                        positionName: user.position.namePosition
-                                    )
-                                    .padding(32)
-                                }
+                    .padding(.bottom)
+
+                    // Grid de usuários
+                    LazyVGrid(columns: gridRows, spacing: 32) {
+                        ForEach(Array(list.enumerated()), id: \.element.idUser) { index, user in
+                            NavigationLink(destination: ProfileView(index: index, lista: list)) {
+                                CardComponent(
+                                    kit: user.kit,
+                                    name: user.userName,
+                                    idPosition: user.position.idPosition,
+                                    positionName: user.position.namePosition
+                                )
+                                .padding(32)
                             }
                         }
-                        .padding(16)
                     }
-                    .padding()
+
+                    // Mensagem quando nenhum resultado for encontrado
+                    if list.isEmpty {
+                        Text("Ninguém foi encontrado com os filtros selecionados.")
+                            .foregroundColor(.gray)
+                            .italic()
+                            .padding()
+                    }
                 }
-                .navigationTitle("AcaDex") // ✅ aqui está dentro do else
-                .task {
-                    await viewModel.fetchData()
-                }
+                .padding(16)
             }
+            .padding()
+            .navigationTitle("Usuários")
+        }
+        // Apresenta o modal de filtro
+        .sheet(isPresented: $showFilter) {
+            FilterComponent(viewModel: viewModel)
+        }
+        .task {
+            await viewModel.fetchData()
         }
     }
 }
@@ -172,5 +74,3 @@ struct UserView: View {
 #Preview {
     UserView()
 }
-
-

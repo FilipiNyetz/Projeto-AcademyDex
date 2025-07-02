@@ -17,7 +17,7 @@ struct aniversaryComponent: View {
             HStack{
                 Text("Aniversário")
                 Spacer()
-                Text("\(birthday)")
+                Text(formatBirthday(birthday))
             }
             .padding(.horizontal)
             .font(.body)
@@ -25,6 +25,19 @@ struct aniversaryComponent: View {
             .fontWeight(.heavy)
         }
         .frame(width: 260, height: 40)
+    }
+}
+
+func formatBirthday(_ isoDate: String) -> String {
+    let formatter = ISO8601DateFormatter()
+    formatter.formatOptions = [.withInternetDateTime]
+
+    if let date = formatter.date(from: isoDate) {
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "dd/MM"
+        return outputFormatter.string(from: date)
+    } else {
+        return "Data inválida"
     }
 }
 
