@@ -5,38 +5,17 @@ struct ProfileView: View {
     let lista: [User]
     @Environment(\.dismiss) var dismiss
     @State private var rawJSON = ""
-
+    
     var body: some View {
         VStack(spacing: 0) {
             // TOPO
-            ZStack(alignment: .topLeading) {
-                Color(red: 28/255, green: 45/255, blue: 112/255)
-                    .ignoresSafeArea(edges: .top)
-
-                VStack(spacing: 8) {
-                    HStack {
-                        Button(action: { dismiss() }) {
-                            Image(systemName: "chevron.left")
-                                .foregroundColor(.white)
-                                .font(.title2)
-                                .padding(.leading)
-                        }
-                        Spacer()
-                    }
-
-                    HStack(spacing: 0) {
-                        Text("Academy")
-                            .font(.system(size: 40, weight: .bold, design: .rounded))
-                            .foregroundColor(.white)
-                        Text("Dex")
-                            .font(.system(size: 40, weight: .bold, design: .rounded))
-                            .foregroundColor(.red)
-                    }
-                    .padding(.bottom, 16)
-                }
+            VStack {
+                AcademyDexHeaderProfile()
+                    .padding(.top, 3)
             }
-            .frame(height: 90)
-
+            .frame(maxWidth: .infinity)
+            .edgesIgnoringSafeArea(.top)
+            
             // NAVEGAÇÃO
             HStack {
                 Button {
@@ -59,7 +38,7 @@ struct ProfileView: View {
                     .padding()
                     .background(Color.gray.opacity(0.3))
                 }
-
+                
                 Button {
                     if index + 1 < lista.count {
                         index += 1
@@ -81,30 +60,30 @@ struct ProfileView: View {
                     .background(Color.gray.opacity(0.3))
                 }
             }
-
+            
             // CONTEÚDO PRINCIPAL
             if lista.indices.contains(index) {
                 let user = lista[index]
-
+                
                 ScrollView {
                     VStack(spacing: 16) {
                         Text("Nº \(user.kit)")
                             .font(.title2)
                             .bold()
                             .padding(.top, 12)
-
+                        
                         Image(decidePhoto(cargo: user.position.namePosition))
                             .resizable()
                             .scaledToFit()
                             .frame(width: 180, height: 180)
                             .clipShape(RoundedRectangle(cornerRadius: 16))
                             .shadow(radius: 5)
-
+                        
                         Text(user.userName.capitalized)
                             .font(.title)
                             .bold()
                             .multilineTextAlignment(.center)
-
+                        
                         HStack {
                             atributesComponent(tela: "Perfil", cargo: user.position.namePosition.capitalized)
                         }
@@ -113,7 +92,7 @@ struct ProfileView: View {
                             aniversaryComponent(birthday: user.birthday)
                                 .padding(.top, -8)
                         }
-                               )
+                        )
                         ZStack {
                             Rectangle()
                                 .fill(Color.yellow.opacity(0.2))
@@ -139,11 +118,11 @@ struct ProfileView: View {
 
 func decidePhoto(cargo: String) -> String {
     switch cargo.capitalized {
-    case "Coder": 
+    case "Coder":
         return "CoderPhoto"
-    case "Designer": 
+    case "Designer":
         return "DesignerPhoto"
-    default: return 
+    default: return
         "DesignerPhoto"
     }
 }

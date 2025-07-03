@@ -11,6 +11,8 @@ struct CardComponent: View {
     let positionName: String
 
     var body: some View {
+        
+       
         let position = PositionType.from(id: idPosition)
 
         VStack{
