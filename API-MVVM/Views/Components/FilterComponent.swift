@@ -4,7 +4,6 @@
 //
 //  Created by Késia Silva Viana on 30/06/25.
 //
-
 import SwiftUI
 
 struct FilterComponent: View {
@@ -112,13 +111,13 @@ struct FilterComponent: View {
 
             Menu {
                 ForEach(opcoes, id: \.self) { opcao in
-                    Button(opcao) {
+                    Button(opcao.capitalized) {
                         selecao.wrappedValue = opcao
                     }
                 }
             } label: {
                 HStack {
-                    Text(selecao.wrappedValue)
+                    Text(selecao.wrappedValue.capitalized)
                         .foregroundColor(.white)
                     Spacer()
                     Image(systemName: "chevron.down")
