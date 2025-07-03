@@ -86,3 +86,7 @@ struct AcademyDexHeader: View {
         }// end ZSTACK
     }// end body
 }//
+
+#Preview{
+    AcademyDexHeader(showFilter: .constant(true))
+}

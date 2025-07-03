@@ -15,7 +15,7 @@ struct ProfileView: View {
             }
             .frame(maxWidth: .infinity)
             .edgesIgnoringSafeArea(.top)
-            
+            .padding(.bottom, -62)
             // NAVEGAÇÃO
             HStack {
                 Button {
@@ -93,16 +93,7 @@ struct ProfileView: View {
                                 .padding(.top, -8)
                         }
                         )
-                        ZStack {
-                            Rectangle()
-                                .fill(Color.yellow.opacity(0.2))
-                                .frame(height: 100)
-                                .overlay(
-                                    Text("Área de JSON")
-                                        .foregroundColor(.gray)
-                                )
-                                .padding(.top)
-                        }
+                        JSONBoxView(user: user)
                     }
                     .padding()
                 }
