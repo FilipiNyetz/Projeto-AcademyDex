@@ -158,6 +158,14 @@ class UserViewModel: ObservableObject {
                 print("Status code: \(httpResponse.statusCode)")
                 if httpResponse.statusCode == 201 {
                     userCreated = true
+                    
+                    newUserName = ""
+                    newKit = ""
+                    newBirthday = Date()
+                    newPosition = ""
+                    
+                    await fetchData()
+                    
                 }
             }
             
