@@ -2,8 +2,8 @@ import SwiftUI
 
 struct UserView: View {
     @StateObject var viewModel = UserViewModel()
-    @State private var showFilter = false //para o botao de filtragem
-
+    /*@State private var showFilter = false*/ //para o botao de filtragem
+    @State var showAdd = false
     var gridRows: [GridItem] {
         [
             GridItem(.flexible()),
@@ -50,9 +50,11 @@ struct UserView: View {
                 ScrollView {
                     Button(action: { // botao adicionado
                         print("Entrou nos Filtros")
-                        showFilter = true
+//                        showFilter = true
+                        showAdd = true
                     }) {
-                        Text("Abrir Filtro")
+//                        Text("Abrir Filtro")
+                        Text("Adicionar")
                     }
                     VStack(alignment: .leading, spacing: 16){
                         LazyVGrid(columns: gridRows, spacing: 16) {
@@ -89,8 +91,11 @@ struct UserView: View {
             }
         }
         //metodo para o funcionamento do modal
-        .sheet(isPresented: $showFilter) {
-            FilterComponent(viewModel: viewModel)
+//        .sheet(isPresented: $showFilter) {
+//            FilterComponent(viewModel: viewModel)
+//        }
+        .sheet(isPresented: $showAdd) {
+            CreateUserView(viewModel: viewModel)
         }
         .navigationTitle("Users API ").task {
             await viewModel.fetchData()
