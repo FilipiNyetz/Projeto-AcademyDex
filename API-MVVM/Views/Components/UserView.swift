@@ -10,7 +10,7 @@ struct UserView: View {
             GridItem(.flexible()),
         ]
     }
-
+//SOCORRO
     var body: some View {
         //para que possa refletir a filtragem na tela
         let list: [User] = viewModel.isFilterActive ? viewModel.usersFilter : viewModel.users
