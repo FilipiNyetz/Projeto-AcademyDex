@@ -34,7 +34,7 @@ struct UserView: View {
                         // Grid de usuários
                         LazyVGrid(columns: gridRows, spacing: 32) {
                             ForEach(Array(list.enumerated()), id: \.element.idUser) { index, user in
-                                NavigationLink(destination: ProfileView(index: index, lista: list)) {
+                                NavigationLink(destination: ProfileView(index: index, lista: list, viewModel: viewModel)) {
                                     CardComponent(
                                         kit: user.kit,
                                         name: user.userName,
