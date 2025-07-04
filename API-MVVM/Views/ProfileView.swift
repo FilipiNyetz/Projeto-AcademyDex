@@ -5,7 +5,19 @@ struct ProfileView: View {
     let lista: [User]
     @Environment(\.dismiss) var dismiss
     @State private var rawJSON = ""
+    @State private var isEditable: Bool = true
     
+    @ObservedObject var viewModel: UserViewModel
+    
+    @State var userDisplayed: User = User(
+        idUser: "",
+        userName: "",
+        kit: 0,
+        position: Position(idPosition: "", namePosition: ""),
+        birthday: ""
+    )
+
+        
     var body: some View {
         VStack(spacing: 0) {
             // TOPO
@@ -93,15 +105,46 @@ struct ProfileView: View {
                                 .padding(.top, -8)
                         }
                         )
-                        ZStack {
-                            Rectangle()
-                                .fill(Color.yellow.opacity(0.2))
-                                .frame(height: 100)
-                                .overlay(
-                                    Text("Área de JSON")
-                                        .foregroundColor(.gray)
-                                )
-                                .padding(.top)
+                        
+                        HStack{
+                            TextEditor(text: $rawJSON)
+                                .frame(width: 360, height: 100)
+                                .border(Color.gray)
+                                .disabled(isEditable)
+                        }.frame(maxWidth: .infinity)
+                            .frame(height: 124)
+                        .background(Color.yellow.opacity(0.2))
+                        
+                        HStack {
+                            Button(action:{
+                                print("Vai editar")
+                                isEditable.toggle()
+                            },label:{
+                                Text("Editar")
+                            })
+                            .frame(width: 160, height: 56)
+                                .background(Color.gray)
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                            
+                            Button("Salvar") {
+                                Task {
+                                    isEditable.toggle()
+                                    if let updatedUser = viewModel.decodeUser(from: rawJSON) {
+                                        await viewModel.editUser(from: updatedUser)
+
+                                        if viewModel.userUpdated {
+                                            print("Editou com sucesso")
+                                        }
+                                    } else {
+                                        print("JSON inválido")
+                                    }
+                                }
+                            }.frame(width: 160, height: 56)
+                                .background(Color.orange)
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+
                         }
                     }
                     .padding()
@@ -113,7 +156,26 @@ struct ProfileView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            userDisplayed = User(
+                idUser: viewModel.users[index].idUser,
+                userName: viewModel.users[index].userName,
+                kit: viewModel.users[index].kit,
+                position: viewModel.users[index].position,
+                birthday: viewModel.users[index].birthday)
+            rawJSON = viewModel.encodeJSON(from: userDisplayed)
+        }
+        .onChange(of: index){
+            userDisplayed = User(
+                idUser: viewModel.users[index].idUser,
+                userName: viewModel.users[index].userName,
+                kit: viewModel.users[index].kit,
+                position: viewModel.users[index].position,
+                birthday: viewModel.users[index].birthday)
+            rawJSON = viewModel.encodeJSON(from: userDisplayed)
+        }
     }
+        
 }
 
 func decidePhoto(cargo: String) -> String {
@@ -127,18 +189,19 @@ func decidePhoto(cargo: String) -> String {
     }
 }
 
-func jsonFromUser(_ user: User) -> String {
-    (try? String(data: JSONEncoder().encode(user), encoding: .utf8)) ?? ""
-}
+//func jsonFromUser() -> String {
+//    let jsonData = try JSONEncoder().encode()
+//}
 
-#Preview {
-    ProfileView(index: 0, lista: [
-        User(
-            idUser: "3",
-            userName: "Lucas Vasconcellos",
-            kit: 732,
-            position: Position(idPosition: "skrrrrr", namePosition: "Coder"),
-            birthday: "06/11"
-        )
-    ])
-}
+//#Preview {
+//    ProfileView(index: 0, lista: [
+//        User(
+//            idUser: "3",
+//            userName: "Lucas Vasconcellos",
+//            kit: 732,
+//            position: Position(idPosition: "skrrrrr", namePosition: "Coder"),
+//            birthday: "06/11"
+//        )
+//    ])
+//}
+
