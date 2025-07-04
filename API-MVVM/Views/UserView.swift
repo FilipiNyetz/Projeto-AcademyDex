@@ -23,11 +23,11 @@ struct UserView: View {
     var list: [User] {
         viewModel.isFilterActive ? viewModel.usersFilter : viewModel.users
     }
-
+    
     var body: some View {
         ZStack(alignment: .bottomTrailing){
             NavigationStack {
-                AcademyDexHeader(showFilter: $showFilter)
+                AcademyDexHeader(showFilter: $showFilter, viewModel: viewModel)
                     .padding(.top, -80)
                 ScrollView {
                     VStack(spacing: 16) {
@@ -88,6 +88,6 @@ struct UserView: View {
     }
 }
 
-//#Preview {
-//    UserView()
-//}
+#Preview {
+    UserView()
+}

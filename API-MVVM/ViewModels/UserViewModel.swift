@@ -25,6 +25,8 @@ class UserViewModel: ObservableObject {
     @Published var newBirthday: Date = Date()
     @Published var newPosition: String = ""
     
+    @Published var userToSearch: String = ""
+    
     @Published var userCreated : Bool = false
     @Published var showAlert: Bool = false
     
@@ -175,6 +177,17 @@ class UserViewModel: ObservableObject {
             
         } catch {
             print("Erro ao codificar ou enviar: \(error)")
+        }
+    }
+ 
+    func searchUser(query: String) {
+        if query.isEmpty {
+            isFilterActive = false
+        } else {
+            usersFilter = users.filter { user in
+                user.userName.lowercased().contains(query.lowercased())
+            }
+            isFilterActive = true
         }
     }
         

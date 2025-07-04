@@ -9,9 +9,10 @@ import SwiftUI
 
 struct AcademyDexHeader: View {
     @State private var searchText = ""
-    @StateObject var viewModel = UserViewModel()
+   // @StateObject var viewModel = UserViewModel()
   //  @State private var showFiltros = false
     @Binding var showFilter: Bool//para o botao de filtragem
+    @ObservedObject var viewModel: UserViewModel
 
 
     var body: some View {
@@ -55,9 +56,7 @@ struct AcademyDexHeader: View {
 
                         // Botão de buscar manualmente
                         Button {
-                            Task {
-                               
-                            }
+                            viewModel.searchUser(query: searchText)
                         } label: {
                             Image(systemName: "arrow.forward.circle.fill")
                                 .font(.title2)

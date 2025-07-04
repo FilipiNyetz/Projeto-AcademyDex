@@ -23,12 +23,14 @@ struct CreateUserView: View {
                         
                     TextField("Insira o nome", text: $viewModel.newUserName)
                         .padding()
+                       
                         .frame(height: 40)
-                        .background(Color.colorBlue)
+                      //  .background(Color.colorBlue)
+                       
                         .cornerRadius(10)
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.black, lineWidth: 0)
+                                .stroke(Color.colorBlue, lineWidth: 2)
                         )
                         .shadow(color: .black.opacity(0.3), radius: 3, x: 0, y: 4)
                 }.padding()
@@ -39,11 +41,11 @@ struct CreateUserView: View {
                     TextField("Insira o Kit", text: $viewModel.newKit)
                         .padding()
                         .frame(height: 40)
-                        .background(Color.colorBlue)
+                   
                         .cornerRadius(10)
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.black, lineWidth: 0)
+                                .stroke(Color.colorBlue, lineWidth: 2)
                         )
                         .shadow(color: .black.opacity(0.3), radius: 3, x: 0, y: 4)
                 }.padding()
@@ -72,7 +74,7 @@ struct CreateUserView: View {
                     .labelsHidden()
                     .frame(height: 24)
                     .padding()
-                    .background(Color.colorBlue)
+                    .background(Color.gray)
                     .cornerRadius(10)
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
@@ -110,7 +112,6 @@ struct CreateUserView: View {
     }
         
 }
-
-//#Preview {
-//    CreateUserView()
-//}
+#Preview {
+    CreateUserView(viewModel: UserViewModel())
+}
