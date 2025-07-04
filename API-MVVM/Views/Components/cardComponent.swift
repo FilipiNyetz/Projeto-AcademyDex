@@ -18,6 +18,9 @@ struct CardComponent: View {
         VStack{
             VStack(alignment: .leading) {
                 Image(position.imagePerfilPhoto)
+                    .resizable()
+                    .frame(width: 120, height: 120)
+                    .cornerRadius(10)
 
                 Text(name)
                     .bold()

@@ -72,13 +72,12 @@ struct ProfileView: View {
                     .background(Color.gray.opacity(0.3))
                 }
             }
+            .padding(.top, -54)
             
             // CONTEÚDO PRINCIPAL
             if lista.indices.contains(index) {
                 let user = lista[index]
-                
-                ScrollView {
-                    VStack(spacing: 16) {
+                    VStack(spacing: 12) {
                         Text("Nº \(user.kit)")
                             .font(.title2)
                             .bold()
@@ -148,7 +147,7 @@ struct ProfileView: View {
                         }
                     }
                     .padding()
-                }
+                    .padding(.top, -12)
             } else {
                 Spacer()
                 ProgressView("Carregando...")
@@ -184,8 +183,14 @@ func decidePhoto(cargo: String) -> String {
         return "CoderPhoto"
     case "Designer":
         return "DesignerPhoto"
-    default: return
-        "DesignerPhoto"
+    case "Mentor":
+        return "MentorPhoto"
+    case "Mentor Jr":
+        return "MentorJrPhoto"
+    case "Suporte":
+        return "SuportPhoto"
+    default:
+        return "CoderPhoto"
     }
 }
 
