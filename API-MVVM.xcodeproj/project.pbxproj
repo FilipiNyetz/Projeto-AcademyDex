@@ -35,16 +35,6 @@
 			path = "API-MVVM";
 			sourceTree = "<group>";
 		};
-		CCE3D7732E130EE600DAA2DD /* API-MVVMTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "API-MVVMTests";
-			sourceTree = "<group>";
-		};
-		CCE3D77D2E130EE600DAA2DD /* API-MVVMUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "API-MVVMUITests";
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,8 +66,6 @@
 			isa = PBXGroup;
 			children = (
 				CCE3D7652E130EE500DAA2DD /* API-MVVM */,
-				CCE3D7732E130EE600DAA2DD /* API-MVVMTests */,
-				CCE3D77D2E130EE600DAA2DD /* API-MVVMUITests */,
 				CCE3D7642E130EE500DAA2DD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -130,9 +118,6 @@
 			dependencies = (
 				CCE3D7722E130EE600DAA2DD /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				CCE3D7732E130EE600DAA2DD /* API-MVVMTests */,
-			);
 			name = "API-MVVMTests";
 			packageProductDependencies = (
 			);
@@ -152,9 +137,6 @@
 			);
 			dependencies = (
 				CCE3D77C2E130EE600DAA2DD /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				CCE3D77D2E130EE600DAA2DD /* API-MVVMUITests */,
 			);
 			name = "API-MVVMUITests";
 			packageProductDependencies = (
@@ -397,7 +379,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2XBHGB4LG5;
+				DEVELOPMENT_TEAM = 69Q9PZ4TXJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -425,7 +407,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2XBHGB4LG5;
+				DEVELOPMENT_TEAM = 69Q9PZ4TXJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
