@@ -77,6 +77,7 @@ struct ProfileView: View {
             // CONTEÚDO PRINCIPAL
             if lista.indices.contains(index) {
                 let user = lista[index]
+                ScrollView{
                     VStack(spacing: 12) {
                         Text("Nº \(user.kit)")
                             .font(.title2)
@@ -116,7 +117,6 @@ struct ProfileView: View {
                         
                         HStack {
                             Button(action:{
-                                print("Vai editar")
                                 isEditable.toggle()
                             },label:{
                                 Text("Editar")
@@ -148,6 +148,7 @@ struct ProfileView: View {
                     }
                     .padding()
                     .padding(.top, -12)
+                }
             } else {
                 Spacer()
                 ProgressView("Carregando...")
